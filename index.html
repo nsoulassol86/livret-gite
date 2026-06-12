@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#7c5c3e">
+<title>Livret d'accueil · Welcome · Willkommen</title>
+<style>
+  /* ===================================================================
+     PERSONNALISATION RAPIDE — modifie les valeurs ci-dessous
+     =================================================================== */
+  :root{
+    --accent:      #9a6b43;   /* couleur principale (boutons, accents) */
+    --accent-dark: #6f4a2b;
+    --bg1:         #f4ece1;   /* dégradé de fond, haut */
+    --bg2:         #e8dac6;   /* dégradé de fond, bas  */
+    --card:        #fffdf9;
+    --text:        #3a2f25;
+    --muted:       #8a7a68;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--text);
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100%;
+    display:flex;align-items:center;justify-content:center;
+    padding:28px 18px;
+  }
+  .wrap{width:100%;max-width:440px;animation:rise .5s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .logo{
+    width:64px;height:64px;margin:0 auto 18px;
+    border-radius:50%;
+    background:var(--accent);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:30px;box-shadow:0 8px 22px rgba(122,84,52,.28);
+  }
+
+  h1{
+    text-align:center;font-size:1.6rem;font-weight:700;line-height:1.25;
+    margin-bottom:6px;letter-spacing:-.01em;
+  }
+  .subtitle{
+    text-align:center;color:var(--muted);font-size:.98rem;
+    margin-bottom:26px;line-height:1.45;
+  }
+
+  .langs{display:flex;flex-direction:column;gap:14px}
+  .lang{
+    display:flex;align-items:center;gap:16px;
+    background:var(--card);
+    border:1.5px solid rgba(122,84,52,.12);
+    border-radius:18px;padding:16px 18px;
+    text-decoration:none;color:inherit;
+    box-shadow:0 4px 14px rgba(80,55,30,.07);
+    transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease;
+    position:relative;
+  }
+  .lang:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(80,55,30,.13)}
+  .lang:active{transform:translateY(0) scale(.99)}
+  .lang .flag{font-size:2.1rem;line-height:1;width:44px;text-align:center}
+  .lang .meta{flex:1;min-width:0}
+  .lang .name{font-weight:700;font-size:1.12rem;margin-bottom:2px}
+  .lang .action{color:var(--muted);font-size:.88rem}
+  .lang .arrow{
+    color:var(--accent);font-size:1.4rem;flex-shrink:0;
+    transition:transform .12s ease;
+  }
+  .lang:hover .arrow{transform:translateX(3px)}
+
+  /* langue détectée automatiquement */
+  .lang.suggested{border-color:var(--accent);box-shadow:0 6px 20px rgba(122,84,52,.18)}
+  .badge{
+    position:absolute;top:-9px;right:14px;
+    background:var(--accent);color:#fff;
+    font-size:.66rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+    padding:3px 9px;border-radius:20px;
+    display:none;
+  }
+  .lang.suggested .badge{display:block}
+
+  footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:28px;line-height:1.5}
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="logo">🏡</div>
+    <h1>Bienvenue<br>Welcome · Willkommen</h1>
+    <p class="subtitle">
+      Choisissez votre langue<br>
+      Choose your language · Wählen Sie Ihre Sprache
+    </p>
+
+    <nav class="langs" id="langs">
+      <a class="lang" data-lang="fr" href="livret-fr.pdf" target="_blank" rel="noopener">
+        <span class="flag">🇫🇷</span>
+        <span class="meta">
+          <span class="name">Français</span>
+          <span class="action">Ouvrir le livret d'accueil</span>
+        </span>
+        <span class="badge">Détecté</span>
+        <span class="arrow">›</span>
+      </a>
+
+      <a class="lang" data-lang="en" href="livret-en.pdf" target="_blank" rel="noopener">
+        <span class="flag">🇬🇧</span>
+        <span class="meta">
+          <span class="name">English</span>
+          <span class="action">Open the welcome booklet</span>
+        </span>
+        <span class="badge">Detected</span>
+        <span class="arrow">›</span>
+      </a>
+
+      <a class="lang" data-lang="de" href="livret-de.pdf" target="_blank" rel="noopener">
+        <span class="flag">🇩🇪</span>
+        <span class="meta">
+          <span class="name">Deutsch</span>
+          <span class="action">Das Willkommensheft öffnen</span>
+        </span>
+        <span class="badge">Erkannt</span>
+        <span class="arrow">›</span>
+      </a>
+    </nav>
+
+    <footer>📶 Wi-Fi, équipements, conseils &amp; bonnes adresses<br>vous attendent dans le livret.</footer>
+  </main>
+
+<script>
+  // Met en avant la langue du téléphone du visiteur (sans rien forcer).
+  (function () {
+    var pref = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+    var code = pref.slice(0, 2).toLowerCase();
+    var match = document.querySelector('.lang[data-lang="' + code + '"]');
+    if (match) {
+      match.classList.add('suggested');
+      // remonte la langue détectée en haut de la liste
+      match.parentNode.prepend(match);
+    }
+  })();
+</script>
+</body>
+</html>
